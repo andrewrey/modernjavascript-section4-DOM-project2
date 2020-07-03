@@ -1,9 +1,21 @@
 /// LISTEN FOR SUBMIT
-document.getElementById('loan-form').addEventListener('submit', calculateResult);
+document.getElementById('loan-form').addEventListener('submit', function(e){
+  // Hide results
+  document.getElementById('results').style.display = 'none';
+
+
+  // Show Loader
+  document.getElementById('loading').style.display = 'block';
+
+  setTimeout(calculateResult, 2000);
+
+
+  e.preventDefault();
+});
 
 /// CALCULATE RESULT
 
-function calculateResult(e){
+function calculateResult(){
   console.log('calculating...');
   // UI Vars
   const amount = document.getElementById('amount');
@@ -27,11 +39,16 @@ function calculateResult(e){
     monthlyPayment.value = monthly.toFixed(2);
     totalPayment.value = (monthly * calculatedPayments).toFixed(2);
     totalInterest.value = ((monthly * calculatedPayments) - principal).toFixed(2);
+    // Show Results
+    document.getElementById('results').style.display = 'block';
+    // Hide Loader 
+    document.getElementById('loading').style.display = 'none';
   } else {
     showError('Please check your Numbers')
+    // Hide Loader 
+    document.getElementById('loading').style.display = 'none';
   }
 
-  e.preventDefault();
 }
 
 
